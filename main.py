@@ -76,12 +76,12 @@ class Parser:
                 if sku == search_data:
                     index = skus_list.index(sku)
                     product = our_product.find('a', '___Clickable___fcJVD').text
-                    card_market = cards_market[index].find('span',
+                    card_market_name = cards_market[index].find('span',
                                                            class_='style-linkContnent___IRaY_ style-linkText___RWnjN').text
                     href = cards_market[index].find('a', class_='___Clickable___fcJVD').get('href').replace('//', '')
                     binding = bindings[index].find('span').text
 
-                    return self.save_data_pars(sku, product, card_market, href, binding)
+                    return self.save_data_pars(sku, product, card_market_name, href, binding)
 
         else:
             return self.save_data_pars(search_data, 'По вашему запросу ничего не найдено',
@@ -89,13 +89,13 @@ class Parser:
                                        'По вашему запросу ничего не найдено',
                                        'По вашему запросу ничего не найдено',)
 
-    def save_data_pars(self, sku, product, card_market, href, binding):
+    def save_data_pars(self, sku, product, card_market_name, href, binding):
         file_name = 'privyazki/privyazki.xlsx'
 
         if os.path.exists(file_name):
             xl_file = load_workbook(file_name)
             page = xl_file['privyazki']
-            page.append([sku, product, card_market, href, binding])
+            page.append([sku, product, card_market_name, href, binding])
 
             xl_file.save(file_name)
             xl_file.close()
@@ -124,7 +124,7 @@ class Parser:
             xl_file = load_workbook(file_name)
             page = xl_file['privyazki']
 
-            page.append([sku, product, card_market, href, binding])
+            page.append([sku, product, card_market_name, href, binding])
 
             xl_file.save(file_name)
             xl_file.close()
@@ -134,54 +134,6 @@ if __name__ == '__main__':
     data = (
         '30501DBS',
         '43420DBS',
-        '43546DBS',
-        '43894DBS',
-        '43993DBS',
-        '44031DBS',
-        '44032DBS',
-        '44114DBS',
-        '44227DBS',
-        '44394DBS',
-        '44416DBS',
-        '44598DBS',
-        '44849DBS',
-        '44954DBS',
-        '45112DBS',
-        '45229DBS',
-        '45230DBS',
-        '45231DBS',
-        '45247DBS',
-        '46167DBS',
-        '46178DBS',
-        '47231DBS',
-        '49886DBS',
-        '50078DBS',
-        '51083DBS',
-        '51845DBS',
-        '52093DBS',
-        '52121DBS',
-        '57368DBS',
-        '62057DBS',
-        '73655DBS',
-        '73781DBS',
-        '73854DBS',
-        '74551DBS',
-        '8867DBS',
-        '945601DBS',
-        '946262DBS',
-        '946287DBS',
-        '946919DBS',
-        '946927DBS',
-        '947224DBS',
-        '949802DBS',
-        '951538DBS',
-        '951596DBS',
-        '953051DBS',
-        '958011DBS',
-        '960172DBS',
-        '965866DBS',
-        '983495DBS',
-        '998708DBS',
     )
 
     Parser().executor(data)
